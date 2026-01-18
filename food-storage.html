@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI食材管理 - 智能食材管理专家</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        body {
+            background-color: #f8fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* 顶部导航栏 */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        .header-box {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .logo span {
+            color: #2980b9;
+        }
+        .company {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 主容器 */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        /* 首页banner区 */
+        .banner {
+            background: linear-gradient(120deg, #27ae6020, #2980b920);
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .banner h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 18px;
+        }
+        .banner p {
+            font-size: 18px;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 核心痛点模块 */
+        .pain-point {
+            margin-bottom: 60px;
+        }
+        .title {
+            text-align: center;
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .title::after {
+            content: "";
+            width: 80px;
+            height: 3px;
+            background-color: #27ae60;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        .pain-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .pain-item {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .pain-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .pain-item h3 {
+            color: #27ae60;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        .pain-item p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* 核心功能模块 + 新增截图区 */
+        .function {
+            margin-bottom: 60px;
+            background-color: #fff;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 3px 20px rgba(0,0,0,0.03);
+        }
+        /* 新增：功能截图展示区 核心样式 */
+        .func-screenshot {
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        .screen-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+        }
+        .screen-item {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .screen-item img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+        /* 原有功能列表样式 */
+        .func-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .func-item {
+            padding: 30px 20px;
+            border-left: 4px solid #2980b9;
+            border-radius: 8px;
+            background-color: #fbfdff;
+        }
+        .func-item h3 {
+            color: #2980b9;
+            margin-bottom: 15px;
+            font-size: 19px;
+        }
+        .func-item p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* 数据亮点模块 */
+        .data {
+            margin-bottom: 60px;
+        }
+        .data-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .data-item {
+            background: #fff;
+            padding: 30px 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        .data-item h3 {
+            font-size: 32px;
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+        .data-item p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* 关于我们模块 */
+        .about {
+            background: linear-gradient(120deg, #2980b920, #27ae6020);
+            padding: 50px 40px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .about h3 {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .about p {
+            font-size: 18px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 60px;
+            color: #999;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+
+        /* 响应式适配-手机端 */
+        @media (max-width: 768px) {
+            .banner {
+                padding: 40px 20px;
+            }
+            .banner h1 {
+                font-size: 28px;
+            }
+            .title {
+                font-size: 24px;
+            }
+            .function {
+                padding: 30px 20px;
+            }
+            .about {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header>
+        <div class="header-box">
+            <div class="logo">AI<span>食材管理</span></div>
+            <div class="company">晟合博业(邯郸)信息技术有限公司</div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- banner宣传区 -->
+        <section class="banner">
+            <h1>AI食材管理 - 智能食材管理专家</h1>
+            <p>让每一份食材都物尽其用，告别食材浪费与过期焦虑，打造健康高效的智慧饮食新生活</p>
+        </section>
+
+        <!-- 核心痛点 -->
+        <section class="pain-point">
+            <h2 class="title">解决食材管理核心痛点</h2>
+            <div class="pain-list">
+                <div class="pain-item">
+                    <h3>🥬 食材浪费严重</h3>
+                    <p>采购食材过多忘记食用，新鲜食材放至过期变质，造成食材与金钱双重浪费</p>
+                </div>
+                <div class="pain-item">
+                    <h3>⏰ 临期遗忘焦虑</h3>
+                    <p>无法精准记住各类食材保质期，冰箱食材堆积，永远不知道哪些即将过期</p>
+                </div>
+                <div class="pain-item">
+                    <h3>🥗 食材搭配困惑</h3>
+                    <p>冰箱食材品类繁杂，不知道现有食材能组合做出什么菜品，选择困难症频发</p>
+                </div>
+                <div class="pain-item">
+                    <h3>🧾 库存管理混乱</h3>
+                    <p>重复采购同款食材，食材库存无记录，导致食材越堆越多，管理毫无条理</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心功能模块 - 已新增【功能截图板块】 -->
+        <section class="function">
+            <h2 class="title">核心功能 · 智能高效</h2>
+            <!-- ========== 新增：核心功能截图展示区 (你的4张截图) ========== -->
+            <div class="func-screenshot">
+                <div class="screen-list">
+                    <div class="screen-item">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/245434b9ba64442da1fa65b0b3f6ac48.jpg~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=20260118144105ADF9A1F8A1E6F0D0C1A7&rrcfp=dafada99&x-expires=2084942465&x-signature=mDiHWovxt7U%2BvJMIeR%2B8eMEZZgQ%3D" alt="AI食材管理功能截图1">
+                    </div>
+                    <div class="screen-item">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/20efde0b12b84fdfb5c5115e01175647.jpg~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=20260118144105ADF9A1F8A1E6F0D0C1A7&rrcfp=dafada99&x-expires=2084942465&x-signature=LEURVWTc6TV7Cb6A6jxt%2Fn9p%2BLc%3D" alt="AI食材管理功能截图2">
+                    </div>
+                    <div class="screen-item">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/5385d9365a19450a815defd306f37949.jpg~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=20260118144105ADF9A1F8A1E6F0D0C1A7&rrcfp=dafada99&x-expires=2084942465&x-signature=1zQfG3U2jVzSqusHqWolG9EuArI%3D" alt="AI食材管理功能截图3">
+                    </div>
+                    <div class="screen-item">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/45426ed0868649d8854360a110610974.jpg~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=20260118144105ADF9A1F8A1E6F0D0C1A7&rrcfp=dafada99&x-expires=2084942465&x-signature=uBCB8Cnp%2Bm1bytBrFAa8NgM1oMg%3D" alt="AI食材管理功能截图4">
+                    </div>
+                </div>
+            </div>
+            <!-- ========== 原有功能文字介绍 ========== -->
+            <div class="func-list">
+                <div class="func-item">
+                    <h3>📸 智能食材录入</h3>
+                    <p>支持拍照扫描自动识别食材信息，也可手动录入食材名称、数量、保质期及存储方式，剩菜余量一键记录，省心省力。</p>
+                </div>
+                <div class="func-item">
+                    <h3>🔔 精准临期提醒</h3>
+                    <p>实时监控食材保质周期，提前推送临期预警信息，食材按过期时间智能排序，优先处理即将过期食材，杜绝浪费。</p>
+                </div>
+                <div class="func-item">
+                    <h3>🍳 AI智能菜谱推荐</h3>
+                    <p>根据当前库存食材，智能匹配推荐合适菜谱，支持按烹饪难度、耗时、用餐人数筛选，解锁食材更多吃法。</p>
+                </div>
+                <div class="func-item">
+                    <h3>💚 科学健康护航</h3>
+                    <p>食材相克智能提醒，应季新鲜食材推荐，搭配AI营养师饮食建议，定制个性化健康饮食方案，吃得健康又安心。</p>
+                </div>
+                <div class="func-item">
+                    <h3>📊 食材数据分析</h3>
+                    <p>自动生成食材利用率报告，精准分析采购习惯，优化食材采购计划，从根源减少不必要的食材采购与浪费。</p>
+                </div>
+                <div class="func-item">
+                    <h3>✨ 极简便捷操作</h3>
+                    <p>全场景适配的极简操作界面，老人小孩均可轻松上手，无需复杂学习，一键完成食材全生命周期管理。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 数据亮点模块 -->
+        <section class="data">
+            <h2 class="title">数据见证 · 真实改变</h2>
+            <div class="data-list">
+                <div class="data-item">
+                    <h3>30%+</h3>
+                    <p>平均减少食材浪费率</p>
+                </div>
+                <div class="data-item">
+                    <h3>¥1000+</h3>
+                    <p>每年节省家庭食材开支</p>
+                </div>
+                <div class="data-item">
+                    <h3>80%</h3>
+                    <p>用户食材利用率提升</p>
+                </div>
+                <div class="data-item">
+                    <h3>∞</h3>
+                    <p>海量智能菜谱随心选</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们模块 -->
+        <section class="about">
+            <h2 class="title">关于我们</h2>
+            <h3>晟合博业(邯郸)信息技术有限公司</h3>
+            <p>我们专注于用前沿AI与信息技术解决生活核心痛点，深耕智慧饮食领域，致力于让每一个家庭的饮食更健康、更高效、更环保。</p>
+        </section>
+    </div>
+
+    <!-- 底部版权 -->
+    <footer>
+        <p>© 2026 晟合博业(邯郸)信息技术有限公司 版权所有 | AI食材管理 产品宣传页</p>
+    </footer>
+</body>
+</html>
