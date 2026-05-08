@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情侣地图 - 记录每一个甜蜜瞬间</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(180deg, #FFF0F3 0%, #FFFFFF 30%, #FFF5F7 60%, #FFFFFF 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 400px;
+            background: linear-gradient(135deg, #FFE0E6 0%, #FFF0F3 50%, #FCE7F3 100%);
+            z-index: -1;
+            border-radius: 0 0 50% 50% / 0 0 80px 80px;
+        }
+        .hero-icon {
+            width: 80px; height: 80px;
+            background: linear-gradient(135deg, #D4607A, #E8879B);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 40px rgba(212, 96, 122, 0.3);
+        }
+        .hero-icon svg { width: 44px; height: 44px; fill: white; }
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #D4607A, #C2185B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: 4px;
+        }
+        .hero .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .hero .tagline {
+            font-size: 14px;
+            color: #999;
+            margin-top: 12px;
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 50px;
+        }
+        .features h2 span { color: #D4607A; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            align-items: center;
+        }
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .feature-item .phone-frame {
+            width: 280px;
+            height: 560px;
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 2px #E5E7EB;
+            margin-bottom: 24px;
+            position: relative;
+            background: #000;
+        }
+        .feature-item .phone-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+        .feature-item h3 {
+            font-size: 20px;
+            color: #D4607A;
+            margin-bottom: 8px;
+        }
+        .feature-item p {
+            font-size: 14px;
+            color: #666;
+            max-width: 300px;
+            line-height: 1.8;
+        }
+
+        /* Highlights */
+        .highlights {
+            background: linear-gradient(135deg, #FFF0F3, #FCE7F3);
+            padding: 60px 20px;
+            margin: 40px 0;
+        }
+        .highlights-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .highlights h2 {
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .highlight-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .highlight-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 16px;
+            box-shadow: 0 4px 20px rgba(212, 96, 122, 0.08);
+        }
+        .highlight-card .icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, #FFE0E6, #FFF0F3);
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
+        .highlight-card h4 {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .highlight-card p {
+            font-size: 12px;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid #F3E8FF;
+        }
+        .footer .company {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+        .footer .copyright {
+            font-size: 12px;
+            color: #CCC;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #D4607A, #E8879B);
+            color: white;
+            padding: 14px 48px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(212, 96, 122, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212, 96, 122, 0.45);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .feature-grid { grid-template-columns: 1fr; gap: 50px; }
+            .feature-item .phone-frame { width: 240px; height: 480px; }
+            .highlight-list { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <h1>情侣地图</h1>
+    <p class="subtitle">记录每一个甜蜜瞬间，点亮属于你们的城市</p>
+    <p class="tagline">一款专为情侣打造的足迹记录与回忆珍藏应用</p>
+</section>
+
+<!-- Features -->
+<section class="features">
+    <h2>用<span>爱</span>丈量世界</h2>
+    <div class="feature-grid">
+        <div class="feature-item">
+            <div class="phone-frame">
+                <img src="../assets/promo/1.jpeg" alt="情侣地图 - 地图足迹">
+            </div>
+            <h3>共同足迹地图</h3>
+            <p>在地图上标记你们走过的每一个地方，点亮城市、记录景点，看着属于两个人的版图不断扩大</p>
+        </div>
+        <div class="feature-item">
+            <div class="phone-frame">
+                <img src="../assets/promo/4.jpeg" alt="情侣地图 - 旅行相册">
+            </div>
+            <h3>旅行相册</h3>
+            <p>按城市分类的精美相册，时光轴记录每一段旅途，捕捉每一个日落，珍藏永恒</p>
+        </div>
+        <div class="feature-item">
+            <div class="phone-frame">
+                <img src="../assets/promo/3.jpeg" alt="情侣地图 - 纪念工具箱">
+            </div>
+            <h3>纪念工具箱</h3>
+            <p>时间胶囊封存美好记忆，心愿清单一起完成梦想，让每一天都值得期待</p>
+        </div>
+        <div class="feature-item">
+            <div class="phone-frame">
+                <img src="../assets/promo/2.jpeg" alt="情侣地图 - 个人中心">
+            </div>
+            <h3>情侣空间</h3>
+            <p>绑定情侣共享数据，VIP专属权益，签到积分，记录在一起的每一天</p>
+        </div>
+    </div>
+</section>
+
+<!-- Highlights -->
+<section class="highlights">
+    <div class="highlights-inner">
+        <h2>为什么选择情侣地图</h2>
+        <div class="highlight-list">
+            <div class="highlight-card">
+                <div class="icon">📍</div>
+                <h4>城市点亮</h4>
+                <p>走过的城市自动点亮，见证你们的足迹版图</p>
+            </div>
+            <div class="highlight-card">
+                <div class="icon">📸</div>
+                <h4>精美模板</h4>
+                <p>多种相册模板，让回忆更有仪式感</p>
+            </div>
+            <div class="highlight-card">
+                <div class="icon">💌</div>
+                <h4>时间胶囊</h4>
+                <p>封存此刻心情，未来某天一起开启</p>
+            </div>
+            <div class="highlight-card">
+                <div class="icon">🎯</div>
+                <h4>心愿清单</h4>
+                <p>一起许愿一起实现，记录每个小目标</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Download CTA -->
+<section style="text-align:center; padding: 40px 20px;">
+    <a href="#" class="download-btn">立即下载体验</a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <p class="company">晟合博业(邯郸)信息技术有限公司</p>
+    <p class="copyright">Copyright &copy; 2024-2025 All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
